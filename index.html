@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductive Health Chatbot</title>
+    <style>
+        /* Your existing CSS styles */
+        /* ... */
+
+        /* Additional CSS for loading spinner */
+        #loading {
+            text-align: center;
+            color: #666;
+            display: none; /* Hide initially */
+        }
+
+        #loading img {
+            width: 50px; /* Adjust size as needed */
+            height: 50px; /* Adjust size as needed */
+        }
+    </style>
+</head>
+<body>
+    <h1>Reproductive Health Chatbot</h1>
+    <div id="chatbox">
+        <div id="chat-input">
+            <input type="text" id="questionInput" placeholder="Type your question..." disabled>
+            <button onclick="sendQuestion()" disabled>Send</button>
+        </div>
+        <div id="chatlog"></div>
+        <div id="loading">
+            <img src="loading.gif" alt="Loading..."> <!-- Loading GIF -->
+        </div>
+    </div>
+
+    <script>
+        // Function to send user's question
+        async function sendQuestion() {
+            const question = document.getElementById('questionInput').value;
+            if (!question.trim()) return;
+
+            // Disable input and button
+            document.getElementById('questionInput').disabled = true;
+            document.querySelector('button').disabled = true;
+
+            const data = { question };
+
+            // Show loading message
+            showLoading();
+
+            // Append the user's question to the chat log
+            appendMessage(question, 'question');
+
+            try {
+                const response = await fetch('http://localhost:5000/api/query', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                typewriterEffect(result.answer);
+            } catch (error) {
+                console.error('Error:', error);
+                appendMessage("I'm sorry, something went wrong. Please try again later.", 'answer');
+            } finally {
+                // Hide loading message after response
+                hideLoading();
+                // Enable input and button
+                document.getElementById('questionInput').disabled = false;
+                document.querySelector('button').disabled = false;
+            }
+        }
+
+        // Function to display initial greeting message from bot
+        document.addEventListener("DOMContentLoaded", function() {
+            const initialAnswer = "Hello! How can I assist you today?";
+            displayBotResponse(initialAnswer);
+            // Enable input and button after initial greeting
+            document.getElementById('questionInput').disabled = false;
+            document.querySelector('button').disabled = false;
+        });
+
+        // Function to append a message to the chat log
+        function appendMessage(text, className) {
+            const chatlog = document.getElementById('chatlog');
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = text;
+            messageDiv.classList.add(className);
+            chatlog.appendChild(messageDiv);
+        }
+
+        // Function to display bot's response with typewriter effect
+        function typewriterEffect(answer) {
+            const chatlog = document.getElementById('chatlog');
+            const answerDiv = document.createElement('div');
+            const cursorSpan = document.createElement('span');
+
+            answerDiv.classList.add('answer');
+            cursorSpan.classList.add('cursor');
+            cursorSpan.textContent = '|';
+            answerDiv.appendChild(cursorSpan);
+            chatlog.appendChild(answerDiv); // Append answer to chat log
+
+            // Typewriter effect settings
+            const typingSpeed = 50; // Adjust typing speed (characters per second)
+            let index = 0;
+
+            function type() {
+                if (index < answer.length) {
+                    answerDiv.textContent = answer.substring(0, index + 1);
+                    answerDiv.appendChild(cursorSpan);
+                    index++;
+                    setTimeout(type, typingSpeed);
+                } else {
+                    cursorSpan.style.display = 'none'; // Hide cursor after typing is done
+                }
+            }
+
+            // Start typewriter effect
+            type();
+        }
+
+        // Function to show loading message
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
+        // Function to hide loading message
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Function to display bot response without input
+        function displayBotResponse(answer) {
+            appendMessage(answer, 'answer');
+        }
+    </script>
+</body>
+</html>

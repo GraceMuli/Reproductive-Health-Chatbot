@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #8EC5FC;
+background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+}
+
+h1 {
+    text-align: center;
+    padding: 20px 0;
+    color: white;
+}
+
+#chatbox {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#questionInput {
+    flex: 1; /* Take remaining space */
+    height: 30px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    width: 20vw;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#chatlog {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.question {
+    align-self: flex-start; /* Align to the left */
+    background-color: #e0f7fa;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    max-width: 45%;
+}
+
+.answer {
+    align-self: flex-end; /* Align to the right */
+    background-color: #fce4ec;
+    padding: 10px;
+    margin-right: 5%; /* Adjust margin as needed */
+    margin-bottom: 10px;
+    border-radius: 8px;
+    max-width: 45%;
+    min-width: 15%; /* Adjust width as needed */
+}
