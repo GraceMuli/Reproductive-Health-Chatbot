@@ -1,5 +1,5 @@
 ## Project Summary
-Summert is a project focused on intent classification and question answering using deep learning techniques, particularly leveraging Keras with TensorFlow. 
+This is a project focused on intent classification and question answering using deep learning techniques, particularly leveraging Keras with TensorFlow. 
 It includes data preprocessing, model training using k-fold cross-validation, and a Flask API for real-time queries.
 
 ## How to Run
