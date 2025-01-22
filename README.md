@@ -8,7 +8,7 @@ It includes data preprocessing, model training using k-fold cross-validation, an
 
 ```bash
 # Clone the repository
-git clone https://github.com/blackninja81/chatbot.git
+git clone https://github.com/GraceMuli/Reproductive-Health-Chatbot.git
 cd chatbot
 
 # Set up virtual environment (optional but recommended)
